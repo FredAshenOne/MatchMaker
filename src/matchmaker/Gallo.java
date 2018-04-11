@@ -2,8 +2,8 @@ package matchmaker;
 
 public class Gallo {
 
-	private String nombre,dueno;
-	private int peso;	
+	private String nombre,dueno,status;
+	private int peso,anillo;	
 	
 	public int getPeso() {
 		return peso;
@@ -23,6 +23,19 @@ public class Gallo {
 	public void setDueno(String dueno) {
 		this.dueno = dueno;
 	}
+	public int getAnillo() {
+		return anillo;
+	}
+	public void setAnillo(int anillo) {
+		this.anillo = anillo;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 
 	
 }

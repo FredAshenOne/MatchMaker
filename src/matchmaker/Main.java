@@ -9,7 +9,9 @@ public class Main {
 			public void run() {
 				try {
 					window frame = new window();
-					frame.setVisible(true);
+					frame.setVisible(false);
+					Menu frame1 = new Menu();
+					frame1.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

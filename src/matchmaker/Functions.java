@@ -10,7 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -91,31 +93,36 @@ public class Functions {
 	}
 	
 	
-    public void exportTable(DefaultTableModel model,String txt_evento,String txt_ronda) {
+    public void exportTable(DefaultTableModel model,String txt_evento,String txt_ronda,String txtFecha) {
     	
        XSSFWorkbook wb = new XSSFWorkbook();
        XSSFSheet sh = wb.createSheet();
-       XSSFRow rows,ronda=sh.createRow(1),evento = sh.createRow(0),fecha = sh.createRow(2),row = sh.createRow(3);
+       XSSFRow rows,ronda=sh.createRow(1),evento = sh.createRow(0),fecha = sh.createRow(2),headers = sh.createRow(3),row = sh.createRow(4);
        evento.createCell(0).setCellValue(txt_evento);
        CellRangeAddress r1 = new CellRangeAddress(0,0,0,9);
        sh.addMergedRegion(r1);
        sh.addMergedRegion(new CellRangeAddress(1,1,0,9));
        sh.addMergedRegion(new CellRangeAddress(2,2,0,9));
-   
+       CellStyle cs = fecha.getSheet().getWorkbook().createCellStyle();
+       cs.setAlignment(CellStyle.ALIGN_CENTER);
+       fecha.createCell(0).setCellValue(txtFecha);
+       fecha.getCell(0).setCellStyle(cs);
+       evento.getCell(0).setCellStyle(cs);
        ronda.createCell(0).setCellValue(txt_ronda);
-       row.createCell(0).setCellValue("PELEA");
-       row.createCell(1).setCellValue("PARTIDO");       
-       row.createCell(2).setCellValue("GALLO");
-       row.createCell(3).setCellValue("PESO");
-       row.createCell(4).setCellValue("ANILLO");
-       row.createCell(5).setCellValue("VS");
-       row.createCell(6).setCellValue("GALLO");
-       row.createCell(7).setCellValue("PESO");
-       row.createCell(8).setCellValue("ANILLO");
-       row.createCell(9).setCellValue("PARTIDO");
+       ronda.getCell(0).setCellStyle(cs);
+       headers.createCell(0).setCellValue("PELEA");
+       headers.createCell(1).setCellValue("PARTIDO");       
+       headers.createCell(2).setCellValue("GALLO");
+       headers.createCell(3).setCellValue("PESO");
+       headers.createCell(4).setCellValue("ANILLO");
+       headers.createCell(5).setCellValue("VS");
+       headers.createCell(6).setCellValue("GALLO");
+       headers.createCell(7).setCellValue("PESO");
+       headers.createCell(8).setCellValue("ANILLO");
+       headers.createCell(9).setCellValue("PARTIDO");
       
        for(int i = 0;i < model.getRowCount();i++) {
-    	   rows = sh.createRow(i+3);
+    	   rows = sh.createRow(i+4);
     	   rows.createCell(0).setCellValue(model.getValueAt(i,0).toString());
     	   rows.createCell(1).setCellValue(model.getValueAt(i,1).toString());
     	   rows.createCell(2).setCellValue(model.getValueAt(i,2).toString());
@@ -129,8 +136,8 @@ public class Functions {
        }
        
        try {
-    	   wb.write(new FileOutputStream(new File("peleas.xlsx")));
-    	   Desktop.getDesktop().open(new File("peleas.xlsx"));
+    	   wb.write(new FileOutputStream(new File("docs/peleas.xlsx")));
+    	   Desktop.getDesktop().open(new File("docs/peleas.xlsx"));
        }catch (Exception ex) {
     	   
        }
